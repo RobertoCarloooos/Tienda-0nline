@@ -84,6 +84,9 @@ class TiendaController extends AbstractController
         $doctrine->persist($category3);
         $doctrine->persist($category);
         $doctrine->persist($category4);
+         $doctrine->persist($category2);
+         $doctrine->persist($category5);
+         $doctrine->persist($category6);
 
         
         $doctrine->persist($article);
@@ -105,6 +108,12 @@ if ($form -> isSubmitted() && $form -> isValid()){
 $article = $form -> getData();
 $doctrine -> persist($article);
 $doctrine -> flush();
+
+$this -> addFlash(type:'exito', message:'Has añadido un nuevo producto.');
+//abajo he creado nuevamente el formulario para que se resetee buscar una forma mas elegante si tengo tiempo
+//$form = $this -> createForm(ArticleType::class);
+
+return $this -> redirectToRoute(route:'listArticle');
 }
 
         return $this -> render('articles/newArticle.html.twig', ['articleForm' => $form]);

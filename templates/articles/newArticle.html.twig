@@ -2,6 +2,9 @@
 
  {% block contenido%}
 
+{% for mensaje in app.flashes('exito') %}
+<p> {{ mensaje }} </p>
+{% endfor %}
 {{ form(articleForm) }}
 
  {% endblock %}
