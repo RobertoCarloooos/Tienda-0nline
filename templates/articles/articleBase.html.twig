@@ -15,17 +15,20 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" href="#">Inicio <span class="sr-only">(current)</span></a>
-                        <a class="nav-link" href="{{ path ('listArticle') }}">Lista de Productos</a>
-                        <a class="nav-link" href="#">Cesta</a>
-                         <a class="nav-link" href="{{ path ('InsertArticles') }}">Crear Productos</a>
+                        <a class="nav-link active" href="{{ path('app_login')}}">Iniciar Sesion <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ path('listArticle') }}">Lista de Productos</a>
+                        <a class="nav-link" href="{{ path('show_cart') }}">Cesta</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a class="nav-link" href="{{ path('InsertArticles') }}">Crear Productos</a>
+                        {% endif %}
                     </div>
                 </div>
             </nav>
            
+            <h2>Bienvenid@ {{ app.user.username | default('') }}</h2>
+           
             {% block contenido %}
-            
-             {% endblock %}
+            {% endblock %}
         </div>
     </body>
 </html>

@@ -1,26 +1,33 @@
 {% extends "articles/articleBase.html.twig" %}
 
-
 {% block contenido %}
 
-
 {% for mensaje in app.flashes('exito') %}
-<p> {{ mensaje }} </p>
+    <p>{{ mensaje }}</p>
 {% endfor %}
 
-<h2>Listado de Productos </h2>
-    <div class="row row-cols-1 row-cols-md-2">
-        {% for article in articles %}
-            <div class="col mb-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ article.image }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ article.name }}</h5>
-                        <p class="card-text">{{ article.description }}</p>
-                        <a href="{{ path('getArticle',{'id':article.id}) }}" class="btn btn-primary">Más Info</a>
-                    </div>
+<h2>Listado de Productos</h2>
+<div class="row row-cols-1 row-cols-md-2">
+    {% for article in articles %}
+        <div class="col mb-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ article.image }}" class="card-img-top" alt="{{ article.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.name }}</h5>
+                    <p class="card-text">{{ article.description }}</p>
+                    <a href="{{ path('getArticle', {'id': article.id}) }}" class="btn btn-primary">Más Info</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('editArticle', {'id': article.id}) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ path('deletArticle', {'id': article.id}) }}" class="btn btn-danger">Eliminar</a>
+                    {% endif %}
+                    <form action="{{ path('add_to_cart', {'id': article.id}) }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-success">Añadir al carrito</button>
+                    </form>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
+</div>
+<a href="{{ path('show_cart') }}" class="btn btn-secondary mt-3">Ver carrito</a>
+
 {% endblock %}
